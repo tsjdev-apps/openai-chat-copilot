@@ -7,14 +7,14 @@ using System.Text;
 // Create header
 ConsoleHelper.CreateHeader();
 
-// Get Hoster
-string hoster = ConsoleHelper.GetHoster();
+// Get Host
+string host = ConsoleHelper.GetHost();
 
 // OpenAI Client
 OpenAIClient? client = null;
 string deploymentName = "gpt-3.5-turbo";
 
-switch (hoster)
+switch (host)
 {
     case Statics.OpenAIKey:
         // Get OpenAI Key
