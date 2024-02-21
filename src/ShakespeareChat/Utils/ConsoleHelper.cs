@@ -17,10 +17,10 @@ internal static class ConsoleHelper
         AnsiConsole.WriteLine();
     }
 
-    public static string GetHoster()
+    public static string GetHost()
         => AnsiConsole.Prompt(
             new SelectionPrompt<string>()
-            .Title("Select the [yellow]hoster[/]?")
+            .Title("Select the [yellow]host[/]?")
             .AddChoices([Statics.OpenAIKey, Statics.AzureOpenAIKey]));
 
     public static string GetAzureOpenAIEndpoint()
