@@ -8,7 +8,7 @@ using System.Text;
 ConsoleHelper.CreateHeader();
 
 // Get Host
-string host = ConsoleHelper.GetHost();
+string host = ConsoleHelper.SelectFromOptions([Statics.OpenAIKey, Statics.AzureOpenAIKey]);
 
 // OpenAI Client
 OpenAIClient? client = null;
@@ -18,24 +18,31 @@ switch (host)
 {
     case Statics.OpenAIKey:
         // Get OpenAI Key
-        string openAIKey = ConsoleHelper.GetApiKey(Statics.OpenAIKey);
+        string openAIKey = 
+            ConsoleHelper.GetString($"Please insert your [yellow]{Statics.OpenAIKey}[/] API key:");
+
         // Create OpenAI client
         client = new(openAIKey);
+
         break;
 
     case Statics.AzureOpenAIKey:
         // Get Endpoint
-        string endpoint = ConsoleHelper.GetAzureOpenAIEndpoint();
-        // Show Header
-        ConsoleHelper.CreateHeader();
+        string endpoint = 
+            ConsoleHelper.GetUrl("Please insert your [yellow]Azure OpenAI endpoint[/]:");
+
         // Get Azure OpenAI Key
-        string azureOpenAIKey = ConsoleHelper.GetApiKey(Statics.AzureOpenAIKey);
+        string azureOpenAIKey = 
+            ConsoleHelper.GetString($"Please insert your [yellow]{Statics.AzureOpenAIKey}[/] API key:");
+
         // Create OpenAI client
-        client = new(new Uri(endpoint), new AzureKeyCredential(azureOpenAIKey));
-        // Show Header
-        ConsoleHelper.CreateHeader();
+        client = 
+            new(new Uri(endpoint), new AzureKeyCredential(azureOpenAIKey));
+
         // Get deployment name
-        deploymentName = ConsoleHelper.GetDeploymentName();
+        deploymentName = 
+            ConsoleHelper.GetString("Please insert the [yellow]deployment name[/] of the model:");
+
         break;
 }
 
@@ -57,7 +64,7 @@ while (true)
     AnsiConsole.MarkupLine("[green]Shakespeare:[/]");
 
     StringBuilder stringBuilder = new();
-    await foreach (var chatUpdate in await client.GetChatCompletionsStreamingAsync(options))
+    await foreach (StreamingChatCompletionsUpdate? chatUpdate in await client.GetChatCompletionsStreamingAsync(options))
     {
         if (chatUpdate.ChoiceIndex.HasValue)
         {
@@ -72,7 +79,7 @@ while (true)
     AnsiConsole.WriteLine();
     AnsiConsole.MarkupLine("[green]User:[/]");
 
-    var userMessage = Console.ReadLine();
+    string? userMessage = Console.ReadLine();
     options.Messages.Add(new ChatRequestUserMessage(userMessage));
 }
 
@@ -83,7 +90,7 @@ ChatCompletionsOptions CreateChatCompletionsOptions()
     {
         MaxTokens = 1000,
         Temperature = 0.7f,
-        DeploymentName = deploymentName
+        DeploymentName = deploymentName,
     };
 
     chatCompletionsOptions.Messages.Add(new ChatRequestSystemMessage(

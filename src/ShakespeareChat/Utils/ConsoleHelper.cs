@@ -17,30 +17,37 @@ internal static class ConsoleHelper
         AnsiConsole.WriteLine();
     }
 
-    public static string GetHost()
-        => AnsiConsole.Prompt(
+    public static string SelectFromOptions(List<string> options)
+    {
+        CreateHeader();
+
+        return AnsiConsole.Prompt(
             new SelectionPrompt<string>()
             .Title("Select the [yellow]host[/]?")
-            .AddChoices([Statics.OpenAIKey, Statics.AzureOpenAIKey]));
+            .AddChoices(options));
+    }
 
-    public static string GetAzureOpenAIEndpoint()
-        => AnsiConsole.Prompt(
-            new TextPrompt<string>("Please insert your [yellow]Azure OpenAI endpoint[/]:")
+    public static string GetUrl(string prompt)
+    {
+        CreateHeader();
+
+        return AnsiConsole.Prompt(
+            new TextPrompt<string>(prompt)
             .PromptStyle("white")
             .ValidationErrorMessage("[red]Invalid prompt[/]")
             .Validate(prompt =>
             {
                 if (prompt.Length < 3)
                 {
-                    return ValidationResult.Error("[red]Endpoint to short[/]");
+                    return ValidationResult.Error("[red]URL too short[/]");
                 }
 
                 if (prompt.Length > 250)
                 {
-                    return ValidationResult.Error("[red]Endpoint to long[/]");
+                    return ValidationResult.Error("[red]URL too long[/]");
                 }
 
-                if (Uri.TryCreate(prompt, UriKind.Absolute, out var uri)
+                if (Uri.TryCreate(prompt, UriKind.Absolute, out Uri? uri)
                     && uri.Scheme == Uri.UriSchemeHttps)
                 {
                     return ValidationResult.Success();
@@ -48,10 +55,14 @@ internal static class ConsoleHelper
 
                 return ValidationResult.Error("[red]No valid URL[/]");
             }));
+    }
 
-    public static string GetApiKey(string type)
-        => AnsiConsole.Prompt(
-            new TextPrompt<string>($"Please insert your [yellow]{type}[/] API key:")
+    public static string GetString(string prompt)
+    {
+        CreateHeader();
+
+        return AnsiConsole.Prompt(
+            new TextPrompt<string>(prompt)
             .PromptStyle("white")
             .ValidationErrorMessage("[red]Invalid prompt[/]")
             .Validate(prompt =>
@@ -66,26 +77,7 @@ internal static class ConsoleHelper
                     return ValidationResult.Error("[red]API key too long[/]");
                 }
 
-                return ValidationResult.Success();
-            }));
-
-    public static string GetDeploymentName()
-        => AnsiConsole.Prompt(
-            new TextPrompt<string>($"Please insert the [yellow]deployment name[/] of the model:")
-            .PromptStyle("white")
-            .ValidationErrorMessage("[red]Invalid prompt[/]")
-            .Validate(prompt =>
-            {
-                if (prompt.Length < 3)
-                {
-                    return ValidationResult.Error("[red]Deployment name too short[/]");
-                }
-
-                if (prompt.Length > 200)
-                {
-                    return ValidationResult.Error("[red]Deployment name too long[/]");
-                }
-
-                return ValidationResult.Success();
-            }));
+            return ValidationResult.Success();
+        }));
+    }
 }
