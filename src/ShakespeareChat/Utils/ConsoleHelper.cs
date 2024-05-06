@@ -69,12 +69,12 @@ internal static class ConsoleHelper
             {
                 if (prompt.Length < 3)
                 {
-                    return ValidationResult.Error("[red]API key too short[/]");
+                    return ValidationResult.Error("[red]Value too short[/]");
                 }
 
                 if (prompt.Length > 200)
                 {
-                    return ValidationResult.Error("[red]API key too long[/]");
+                    return ValidationResult.Error("[red]Value too long[/]");
                 }
 
             return ValidationResult.Success();
