@@ -23,7 +23,7 @@ internal static class ConsoleHelper
 
         return AnsiConsole.Prompt(
             new SelectionPrompt<string>()
-            .Title("Select the [yellow]host[/]?")
+            .Title("Select from the following [yellow]options[/]?")
             .AddChoices(options));
     }
 
