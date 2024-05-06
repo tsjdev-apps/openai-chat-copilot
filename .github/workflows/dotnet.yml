@@ -1,8 +1,6 @@
 name: .NET Build
 
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
@@ -21,8 +19,6 @@ jobs:
         
     - name: Restore dependencies
       run: dotnet restore
-      working-directory: src/
       
     - name: Build
       run: dotnet build --no-restore
-      working-directory: src/

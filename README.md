@@ -28,8 +28,13 @@ Finally you are able to chat with William Shakespeare.
 ![Console3](./docs/shakespeare-chat-03.png)
 
 
-## Blog Post
+## Blog Post / YouTube Video
 
-If you are more interested into details, please see the following [medium.com](https://www.medium.com) post:
+If you are more interested into details, please see the following posts on [medium.com](https://www.medium.com) or in my [personal blog](https://www.tsjdev-apps.de):
 
 - [Creating a copilot using OpenAI and/or Azure OpenAI](https://medium.com/medialesson/creating-a-copilot-using-openai-and-or-azure-openai-03938fcf7413)
+- [Einrichtung von OpenAI](https://www.tsjdev-apps.de/einrichtung-von-openai/)
+- [Einrichtung von Azure OpenAI](https://www.tsjdev-apps.de/einrichtung-von-azure-openai/)
+
+You can also watch the following video on my [YouTube channel](https://www.youtube.com/@tsjdevapps):
+- [Eigener Shakespeare-Copilot mit OpenAI und Azure OpenAI](https://www.youtube.com/watch?v=X53ZwFGHqOc)
